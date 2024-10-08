@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Devcade;
 
-// MAKE SURE YOU RENAME ALL PROJECT FILES FROM DevcadeGame TO YOUR YOUR GAME NAME
-namespace DevcadeGame
+// MAKE SURE YOU RENAME ALL PROJECT FILES FROM WildWestShootout TO YOUR YOUR GAME NAME
+namespace WildWestShootout
 {
 	public class Game1 : Game
 	{
