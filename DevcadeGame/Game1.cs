@@ -113,7 +113,7 @@ namespace WildWestShootout
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(targetsprite, new Vector2(0,0), Color.White);			
 			_spriteBatch.Draw(uhhh, new Vector2(200,100), Color.White);
-			_spriteBatch.DrawString(plswork, "OK!", new Vector2(100, 100), Color.Black);		
+			_spriteBatch.DrawString(plswork, "OK! idk what im doing", new Vector2(100, 100), Color.Black);		
 			_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
 			if (showthis == true)
 			{
