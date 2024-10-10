@@ -9,7 +9,7 @@ namespace WildWestShootout
 	{
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
-
+		QuickDraw1P games;
 		Texture2D targetsprite;
 		Texture2D uhhh;
 		Texture2D ok;
@@ -72,9 +72,8 @@ namespace WildWestShootout
 			uhhh = Content.Load<Texture2D>("1 1");
 			ok = Content.Load<Texture2D>("1 2");
 			plswork = Content.Load<SpriteFont>("text");
-			animate = Content.Load<Texture2D>("gifTest");
-
-
+			//animate = Content.Load<Texture2D>("gifTest");
+			games = new QuickDraw1P(_spriteBatch, plswork);
 		}
 
 		/// <summary>
@@ -114,14 +113,16 @@ namespace WildWestShootout
 			_spriteBatch.Draw(targetsprite, new Vector2(0,0), Color.White);			
 			_spriteBatch.Draw(uhhh, new Vector2(200,100), Color.White);
 			_spriteBatch.DrawString(plswork, "OK!", new Vector2(100, 100), Color.Black);		
-			_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
+			//_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
 			if (showthis == true)
 			{
 				_spriteBatch.DrawString(plswork, "BANG!", new Vector2(100, 400), Color.Black);		
 			}	
+			games.DrawThis();
 			_spriteBatch.End();
 
 			base.Draw(gameTime);
 		}
 	}
+	
 }
