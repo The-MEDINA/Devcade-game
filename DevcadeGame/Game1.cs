@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Devcade;
+using DevcadeGame;
 
 namespace WildWestShootout
 {
@@ -9,13 +10,8 @@ namespace WildWestShootout
 	{
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
-
-		Texture2D targetsprite;
-		Texture2D uhhh;
-		Texture2D ok;
-		Texture2D animate;
-		private SpriteFont plswork;	
-		bool showthis = false;
+		private SpriteFont pressStart2P;	
+		string whichGame = "Demo";
 		/// <summary>
 		/// Stores the window dimensions in a rectangle object for easy use
 		/// </summary>
@@ -34,6 +30,7 @@ namespace WildWestShootout
 		/// <summary>
 		/// Performs any setup that doesn't require loaded content before the first frame.
 		/// </summary>
+		
 		protected override void Initialize()
 		{
 			// Sets up the input library
@@ -68,11 +65,12 @@ namespace WildWestShootout
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// TODO: use this.Content to load your game content here
+			/*
 			targetsprite = Content.Load<Texture2D>("1 0");
 			uhhh = Content.Load<Texture2D>("1 1");
 			ok = Content.Load<Texture2D>("1 2");
 			plswork = Content.Load<SpriteFont>("text");
-			animate = Content.Load<Texture2D>("gifTest");
+			animate = Content.Load<Texture2D>("gifTest");*/
 
 
 		}
@@ -88,12 +86,9 @@ namespace WildWestShootout
 			// Exit when both menu buttons are pressed (or escape for keyboard debugging)
 			// You can change this but it is suggested to keep the keybind of both menu
 			// buttons at once for a graceful exit.
-			if (Input.GetButton(1, Input.ArcadeButtons.A1))
+			if (Input.GetButton(1, Input.ArcadeButtons.Menu))
 			{
-				showthis = true;
-			}
-			else{
-				showthis = false;
+				whichGame = "Quick Draw (1P)";
 			}
 
 			// TODO: Add your update logic here
@@ -111,14 +106,20 @@ namespace WildWestShootout
 			
 			// Batches all the draw calls for this frame, and then performs them all at once
 			_spriteBatch.Begin();
+			if (whichGame.Equals("Quick Draw (1P)"))
+			{
+				//_spriteBatch.DrawString(pressStart2P, "OK!", new Vector2(100, 100), Color.Black);		
+			}
+			
+			/*all of this code works, just commented out if I wanna reference it.
 			_spriteBatch.Draw(targetsprite, new Vector2(0,0), Color.White);			
-			_spriteBatch.Draw(uhhh, new Vector2(200,100), Color.White);
-			_spriteBatch.DrawString(plswork, "OK! idk what im doing", new Vector2(100, 100), Color.Black);		
-			_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
+			_spriteBatch.Draw(uhhh, new Vector2(200,100), Color.White);*/
+			_spriteBatch.DrawString(pressStart2P, "OK! idk what im doing", new Vector2(100, 100), Color.Black);		
+			/*_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
 			if (showthis == true)
 			{
 				_spriteBatch.DrawString(plswork, "BANG!", new Vector2(100, 400), Color.Black);		
-			}	
+			}*/
 			_spriteBatch.End();
 
 			base.Draw(gameTime);
