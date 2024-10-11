@@ -21,7 +21,6 @@ namespace WildWestShootout
         public static ContentManager _content;
         float[] convertedTimer = {0,0};
         int moretesting = 0;
-        Animator animatePlayer1 = new Animator();
         //Clock givemetime; to work. Thanks Ella :>
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
@@ -40,31 +39,25 @@ namespace WildWestShootout
         //drawing out the game here.
         public void DrawThis(GameTime _gameTime)
         {
-            //player1Sprite = player1Stands;
+            _spriteBatch.Begin();
+            player1Sprite = player1Stands;
             //_spriteBatch.DrawString(_font, $"Quick Draw (1P) gamemode.\n{canIpressthis}", new Vector2(0, 0), Color.Black);
-            animatePlayer1.PrepareToAnimate(_spriteBatch, player1Stands, _gameTime, 1, 128, 32, 490);
             if (Input.GetButton(1, Input.ArcadeButtons.A2))
             {
-                animatePlayer1.PrepareToAnimate(_spriteBatch, player1Unholsters, _gameTime, 9, 128, 32, 490);
                 canIpressthis = true;
             }
-            //_spriteBatch.Draw(player1Sprite, new Vector2(32,490), Color.White);	
+            _spriteBatch.Draw(player1Sprite, new Vector2(32,490), Color.White);	
+            _spriteBatch.End();
         }
         //Here's where the game stuff is gonna happen (I say gonna cause as of writing this it doesn't do much)
         public void UpdateThis(GameTime _gameTime)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             DrawThis(_gameTime);
-=======
-=======
->>>>>>> parent of c415320 (Work in progress animations)
             if (Input.GetButton(1, Input.ArcadeButtons.A2))
             {
                 canIpressthis = true;
             }
-            DrawThis();
->>>>>>> parent of c415320 (Work in progress animations)
         }
     }
 }
