@@ -54,8 +54,11 @@ namespace WildWestShootout
         public void UpdateThis(GameTime _gameTime)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             DrawThis(_gameTime);
 =======
+=======
+>>>>>>> parent of c415320 (Work in progress animations)
             if (Input.GetButton(1, Input.ArcadeButtons.A2))
             {
                 canIpressthis = true;
