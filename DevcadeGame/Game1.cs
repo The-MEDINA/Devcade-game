@@ -7,13 +7,12 @@ namespace WildWestShootout
 {
 	public class Game1 : Game
 	{
-		private GraphicsDeviceManager _graphics;
-		private SpriteBatch _spriteBatch;
+		GraphicsDeviceManager _graphics;
+		SpriteBatch _spriteBatch;
 		QuickDraw1P games;
 		Texture2D targetsprite;
 		Texture2D uhhh;
 		Texture2D ok;
-		Texture2D animate;
 		private SpriteFont plswork;	
 		bool showthis = false;
 		/// <summary>
@@ -72,8 +71,7 @@ namespace WildWestShootout
 			uhhh = Content.Load<Texture2D>("1 1");
 			ok = Content.Load<Texture2D>("1 2");
 			plswork = Content.Load<SpriteFont>("text");
-			//animate = Content.Load<Texture2D>("gifTest");
-			games = new QuickDraw1P(_spriteBatch, plswork);
+			games = new QuickDraw1P(_spriteBatch, plswork, Content);
 		}
 
 		/// <summary>
