@@ -28,8 +28,12 @@ namespace WildWestShootout
         }
         public void DrawThis()
         {
+            //_spriteBatch.Begin();
+            System.Console.WriteLine("Begin function.");
             _spriteBatch.DrawString(_font, "yes?", new Vector2(100, 500), Color.Black);
             _spriteBatch.Draw(player1, new Vector2(0,0), Color.White);	
+            System.Console.WriteLine("End function.");
+            //_spriteBatch.End();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Devcade;
+using System;
 
 namespace WildWestShootout
 {
@@ -13,8 +14,10 @@ namespace WildWestShootout
 		Texture2D targetsprite;
 		Texture2D uhhh;
 		Texture2D ok;
+		string whichGame = "Demo";
 		private SpriteFont plswork;	
-		bool showthis = false;
+		bool gameSet = false;
+		//bool showthis = false;
 		/// <summary>
 		/// Stores the window dimensions in a rectangle object for easy use
 		/// </summary>
@@ -71,7 +74,6 @@ namespace WildWestShootout
 			uhhh = Content.Load<Texture2D>("1 1");
 			ok = Content.Load<Texture2D>("1 2");
 			plswork = Content.Load<SpriteFont>("text");
-			games = new QuickDraw1P(_spriteBatch, plswork, Content);
 		}
 
 		/// <summary>
@@ -85,16 +87,14 @@ namespace WildWestShootout
 			// Exit when both menu buttons are pressed (or escape for keyboard debugging)
 			// You can change this but it is suggested to keep the keybind of both menu
 			// buttons at once for a graceful exit.
-			if (Input.GetButton(1, Input.ArcadeButtons.A1))
-			{
-				showthis = true;
-			}
-			else{
-				showthis = false;
-			}
-
 			// TODO: Add your update logic here
-
+			if (Input.GetButton(1, Input.ArcadeButtons.A1) && gameSet == false)
+			{
+				games = new QuickDraw1P(_spriteBatch, plswork, Content);
+				whichGame = "QuickDraw1P";
+				gameSet = true;
+				System.Console.WriteLine("Created and set game.");
+			}
 			base.Update(gameTime);
 		}
 
@@ -112,11 +112,11 @@ namespace WildWestShootout
 			_spriteBatch.Draw(uhhh, new Vector2(200,100), Color.White);
 			_spriteBatch.DrawString(plswork, "OK!", new Vector2(100, 100), Color.Black);		
 			//_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
-			if (showthis == true)
+			if (whichGame.Equals("QuickDraw1P"))
 			{
-				_spriteBatch.DrawString(plswork, "BANG!", new Vector2(100, 400), Color.Black);		
-			}	
-			games.DrawThis();
+				games.DrawThis();
+				System.Console.WriteLine("Called DrawThis().");
+			}
 			_spriteBatch.End();
 
 			base.Draw(gameTime);
