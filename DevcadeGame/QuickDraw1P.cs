@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Devcade;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace WildWestShootout
 {
@@ -11,7 +12,9 @@ namespace WildWestShootout
         SpriteBatch _spriteBatch;
         SpriteFont _font;
         Texture2D player1Sprite;
+        TimeSpan test = new TimeSpan();
         public static ContentManager _content;
+        float timer = 0;
         //thank f*ck i got this to work. Thanks Ella :>
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
@@ -29,8 +32,14 @@ namespace WildWestShootout
         //drawing out the game here.
         public void DrawThis()
         {
-            _spriteBatch.DrawString(_font, "Quick Draw (1P) gamemode.", new Vector2(0, 0), Color.Black);
+            _spriteBatch.DrawString(_font, $"Quick Draw (1P) gamemode.\n{timer}", new Vector2(0, 0), Color.Black);
             _spriteBatch.Draw(player1Sprite, new Vector2(32,490), Color.White);	
+        }
+        public void UpdateThis(GameTime _gameTime)
+        {
+            test = (test+_gameTime.ElapsedGameTime)/60;
+            System.Console.WriteLine("quickdraw1 time"+test);
+            DrawThis();
         }
     }
 }
