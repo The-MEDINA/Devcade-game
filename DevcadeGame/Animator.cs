@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace DevcadeGame
 {
     public class Animator
-    {
+    {/*
         List<Rectangle> spriteSheetList = new();
         int whichFrame = 0;
         public void PrepareToAnimate(SpriteBatch spritebatch, Texture2D spriteSheet, GameTime gametime, int frames, int size, int positionX, int positionY)
@@ -35,6 +35,7 @@ namespace DevcadeGame
                 }
                 timer+= (float)gametime.ElapsedGameTime.TotalMilliseconds;
             }
-        }
+        }*/
+        
     }
 }
