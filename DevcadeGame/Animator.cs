@@ -28,12 +28,12 @@ namespace DevcadeGame
             while (whichFrame < frames)
             {
                 spriteBatch.Draw(spriteSheet, new Vector2(positionX, positionY), spriteSheetList[whichFrame], Color.White);
-                if (timer > 10000000)
+                if (timer > 0.2)
                 {
                     whichFrame++;
                     timer = 0;
                 }
-                timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
+                timer+= (float)gametime.ElapsedGameTime.TotalMilliseconds;
             }
         }
     }

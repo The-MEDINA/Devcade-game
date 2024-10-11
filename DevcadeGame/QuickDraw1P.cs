@@ -44,7 +44,7 @@ namespace WildWestShootout
         public void DrawThis(GameTime _gameTime)
         {
             //player1Sprite = player1Stands;
-            _spriteBatch.DrawString(_font, $"Quick Draw (1P) gamemode.\n{canIpressthis}", new Vector2(0, 0), Color.Black);
+            //_spriteBatch.DrawString(_font, $"Quick Draw (1P) gamemode.\n{canIpressthis}", new Vector2(0, 0), Color.Black);
             animatePlayer1.PrepareToAnimate(_spriteBatch, player1Stands, _gameTime, 1, 128, 32, 490);
             if (Input.GetButton(1, Input.ArcadeButtons.A2))
             {

@@ -88,6 +88,10 @@ namespace WildWestShootout
 				whichGame = "QuickDraw1P";
 				gameSet = true;
 			}
+			if (whichGame.Equals("QuickDraw1P"))
+			{
+				games.UpdateThis(gameTime);
+			}
 			base.Update(gameTime);
 		}
 
@@ -106,10 +110,10 @@ namespace WildWestShootout
 			{
 			_spriteBatch.DrawString(theFont, "Title card & menu here.", new Vector2(0, 0), Color.Black);		
 			}
-			else if (whichGame.Equals("QuickDraw1P"))
+			/*else if (whichGame.Equals("QuickDraw1P"))
 			{
 				games.UpdateThis(gameTime);
-			}
+			}*/
 			System.Console.WriteLine((float) gameTime.ElapsedGameTime.TotalMilliseconds);
 			_spriteBatch.End();
 
