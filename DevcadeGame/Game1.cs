@@ -84,16 +84,18 @@ namespace WildWestShootout
 		{
 			Input.Update(); // Updates the state of the input library
 
-			// Exit when both menu buttons are pressed (or escape for keyboard debugging)
-			// You can change this but it is suggested to keep the keybind of both menu
-			// buttons at once for a graceful exit.
-			// TODO: Add your update logic here
+			//Exit code here.
+			//System.Console.WriteLine(Keyboard.GetState().IsKeyDown(Keys.Escape));
+			if (Keyboard.GetState().IsKeyDown(Keys.Escape) || (Input.GetButton(1, Input.ArcadeButtons.Menu) && Input.GetButton(2, Input.ArcadeButtons.Menu)))
+			{
+				Exit();
+			}
+			//select game.
 			if (Input.GetButton(1, Input.ArcadeButtons.A1) && gameSet == false)
 			{
 				games = new QuickDraw1P(_spriteBatch, plswork, Content);
 				whichGame = "QuickDraw1P";
 				gameSet = true;
-				System.Console.WriteLine("Created and set game.");
 			}
 			base.Update(gameTime);
 		}
@@ -108,14 +110,16 @@ namespace WildWestShootout
 			
 			// Batches all the draw calls for this frame, and then performs them all at once
 			_spriteBatch.Begin();
+			//_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
+			if (whichGame.Equals("Demo"))
+			{
 			_spriteBatch.Draw(targetsprite, new Vector2(0,0), Color.White);			
 			_spriteBatch.Draw(uhhh, new Vector2(200,100), Color.White);
 			_spriteBatch.DrawString(plswork, "OK!", new Vector2(100, 100), Color.Black);		
-			//_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
-			if (whichGame.Equals("QuickDraw1P"))
+			}
+			else if (whichGame.Equals("QuickDraw1P"))
 			{
 				games.DrawThis();
-				System.Console.WriteLine("Called DrawThis().");
 			}
 			_spriteBatch.End();
 

@@ -26,14 +26,11 @@ namespace WildWestShootout
         {
             player1 = _content.Load<Texture2D>("P1Standing - Temp");
         }
+        //drawing out the game here.
         public void DrawThis()
         {
-            //_spriteBatch.Begin();
-            System.Console.WriteLine("Begin function.");
             _spriteBatch.DrawString(_font, "yes?", new Vector2(100, 500), Color.Black);
             _spriteBatch.Draw(player1, new Vector2(0,0), Color.White);	
-            System.Console.WriteLine("End function.");
-            //_spriteBatch.End();
         }
     }
 }
