@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Devcade;
 using System;
-using DevcadeGame;
 
 namespace WildWestShootout
 {

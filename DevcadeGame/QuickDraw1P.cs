@@ -5,7 +5,6 @@ using Devcade;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Threading;
-using DevcadeGame;
 //using DevcadeGame;
 
 namespace WildWestShootout
@@ -18,7 +17,6 @@ namespace WildWestShootout
         SpriteFont _font;
         Texture2D player1Sprite;
         Texture2D player1Stands;
-        Texture2D player1Unholsters;
         bool canIpressthis = false;
         public static ContentManager _content;
         float[] convertedTimer = {0,0};
@@ -38,7 +36,6 @@ namespace WildWestShootout
         {
             //player1Sprite = _content.Load<Texture2D>("P1Standing - Temp");
             player1Stands = _content.Load<Texture2D>("P1Standing - Temp");
-            player1Unholsters = _content.Load<Texture2D>("P1Holster - Temp");
         }
         //drawing out the game here.
         public void DrawThis(GameTime _gameTime)
@@ -56,7 +53,15 @@ namespace WildWestShootout
         //Here's where the game stuff is gonna happen (I say gonna cause as of writing this it doesn't do much)
         public void UpdateThis(GameTime _gameTime)
         {
+<<<<<<< HEAD
             DrawThis(_gameTime);
+=======
+            if (Input.GetButton(1, Input.ArcadeButtons.A2))
+            {
+                canIpressthis = true;
+            }
+            DrawThis();
+>>>>>>> parent of c415320 (Work in progress animations)
         }
     }
 }
