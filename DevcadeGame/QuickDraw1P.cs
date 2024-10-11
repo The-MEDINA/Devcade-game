@@ -10,7 +10,7 @@ namespace WildWestShootout
 	{
         SpriteBatch _spriteBatch;
         SpriteFont _font;
-        Texture2D player1;
+        Texture2D player1Sprite;
         public static ContentManager _content;
         //thank f*ck i got this to work. Thanks Ella :>
         //starts the QuickDraw(1P) gamemode.
@@ -24,13 +24,13 @@ namespace WildWestShootout
         //loading assets here.
         public void LoadThis()
         {
-            player1 = _content.Load<Texture2D>("P1Standing - Temp");
+            player1Sprite = _content.Load<Texture2D>("P1Standing - Temp");
         }
         //drawing out the game here.
         public void DrawThis()
         {
             _spriteBatch.DrawString(_font, "yes?", new Vector2(100, 500), Color.Black);
-            _spriteBatch.Draw(player1, new Vector2(0,0), Color.White);	
+            _spriteBatch.Draw(player1Sprite, new Vector2(32,490), Color.White);	
         }
     }
 }

@@ -11,11 +11,8 @@ namespace WildWestShootout
 		GraphicsDeviceManager _graphics;
 		SpriteBatch _spriteBatch;
 		QuickDraw1P games;
-		Texture2D targetsprite;
-		Texture2D uhhh;
-		Texture2D ok;
 		string whichGame = "Demo";
-		private SpriteFont plswork;	
+		private SpriteFont theFont;	
 		bool gameSet = false;
 		//bool showthis = false;
 		/// <summary>
@@ -68,12 +65,7 @@ namespace WildWestShootout
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
-
-			// TODO: use this.Content to load your game content here
-			targetsprite = Content.Load<Texture2D>("1 0");
-			uhhh = Content.Load<Texture2D>("1 1");
-			ok = Content.Load<Texture2D>("1 2");
-			plswork = Content.Load<SpriteFont>("text");
+			theFont = Content.Load<SpriteFont>("text");
 		}
 
 		/// <summary>
@@ -85,7 +77,6 @@ namespace WildWestShootout
 			Input.Update(); // Updates the state of the input library
 
 			//Exit code here.
-			//System.Console.WriteLine(Keyboard.GetState().IsKeyDown(Keys.Escape));
 			if (Keyboard.GetState().IsKeyDown(Keys.Escape) || (Input.GetButton(1, Input.ArcadeButtons.Menu) && Input.GetButton(2, Input.ArcadeButtons.Menu)))
 			{
 				Exit();
@@ -93,7 +84,7 @@ namespace WildWestShootout
 			//select game.
 			if (Input.GetButton(1, Input.ArcadeButtons.A1) && gameSet == false)
 			{
-				games = new QuickDraw1P(_spriteBatch, plswork, Content);
+				games = new QuickDraw1P(_spriteBatch, theFont, Content);
 				whichGame = "QuickDraw1P";
 				gameSet = true;
 			}
@@ -113,9 +104,7 @@ namespace WildWestShootout
 			//_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
 			if (whichGame.Equals("Demo"))
 			{
-			_spriteBatch.Draw(targetsprite, new Vector2(0,0), Color.White);			
-			_spriteBatch.Draw(uhhh, new Vector2(200,100), Color.White);
-			_spriteBatch.DrawString(plswork, "OK!", new Vector2(100, 100), Color.Black);		
+			_spriteBatch.DrawString(theFont, "Title card & menu here.", new Vector2(0, 0), Color.Black);		
 			}
 			else if (whichGame.Equals("QuickDraw1P"))
 			{
