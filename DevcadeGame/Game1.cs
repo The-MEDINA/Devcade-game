@@ -110,7 +110,6 @@ namespace WildWestShootout
 			{
 				games.UpdateThis(gameTime);
 			}
-			System.Console.WriteLine("game1 time" +gameTime.ElapsedGameTime);
 			_spriteBatch.End();
 
 			base.Draw(gameTime);
