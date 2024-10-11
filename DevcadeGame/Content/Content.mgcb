@@ -49,6 +49,18 @@
 /processorParam:TextureFormat=Color
 /build:1 2.png
 
+#begin P1Holster - Temp.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:P1Holster - Temp.png
+
 #begin P1Standing - Temp.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -29,7 +29,7 @@ namespace WildWestShootout
         //drawing out the game here.
         public void DrawThis()
         {
-            _spriteBatch.DrawString(_font, "yes?", new Vector2(100, 500), Color.Black);
+            _spriteBatch.DrawString(_font, "Quick Draw (1P) gamemode.", new Vector2(0, 0), Color.Black);
             _spriteBatch.Draw(player1Sprite, new Vector2(32,490), Color.White);	
         }
     }
