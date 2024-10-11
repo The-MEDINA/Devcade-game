@@ -105,18 +105,16 @@ namespace WildWestShootout
 			
 			// Batches all the draw calls for this frame, and then performs them all at once
 			_spriteBatch.Begin();
-			//_spriteBatch.Draw(animate, new Vector2(0,200), Color.White);
 			if (whichGame.Equals("Demo"))
 			{
 			_spriteBatch.DrawString(theFont, "Title card & menu here.", new Vector2(0, 0), Color.Black);		
 			}
-			/*else if (whichGame.Equals("QuickDraw1P"))
+			else if (whichGame.Equals("QuickDraw1P"))
 			{
-				games.UpdateThis(gameTime);
-			}*/
-			System.Console.WriteLine((float) gameTime.ElapsedGameTime.TotalMilliseconds);
+				games.DrawThis(gameTime);
+			}
+			//System.Console.WriteLine((float) gameTime.ElapsedGameTime.TotalMilliseconds);
 			_spriteBatch.End();
-
 			base.Draw(gameTime);
 		}
 	}

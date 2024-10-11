@@ -39,21 +39,16 @@ namespace WildWestShootout
         //drawing out the game here.
         public void DrawThis(GameTime _gameTime)
         {
-            _spriteBatch.Begin();
-            player1Sprite = player1Stands;
-            //_spriteBatch.DrawString(_font, $"Quick Draw (1P) gamemode.\n{canIpressthis}", new Vector2(0, 0), Color.Black);
-            if (Input.GetButton(1, Input.ArcadeButtons.A2))
+            _spriteBatch.Draw(player1Stands, new Vector2(32,490), Color.White);	
+            if (canIpressthis == true)
             {
-                canIpressthis = true;
+                _spriteBatch.DrawString(_font, "bang. :>", new Vector2(0, 0), Color.Black);
             }
-            _spriteBatch.Draw(player1Sprite, new Vector2(32,490), Color.White);	
-            _spriteBatch.End();
+
         }
         //Here's where the game stuff is gonna happen (I say gonna cause as of writing this it doesn't do much)
         public void UpdateThis(GameTime _gameTime)
         {
-
-            DrawThis(_gameTime);
             if (Input.GetButton(1, Input.ArcadeButtons.A2))
             {
                 canIpressthis = true;
