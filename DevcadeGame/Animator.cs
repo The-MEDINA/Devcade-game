@@ -11,17 +11,30 @@ namespace DevcadeGame
     public class Animator
     {
         List<Rectangle> spriteSheetList = new();
-        public void PrepareToAnimate(SpriteBatch spritebatch, Texture2D spriteSheet, int frames, int size, int positionX, int positionY)
+        int whichFrame = 0;
+        public void PrepareToAnimate(SpriteBatch spritebatch, Texture2D spriteSheet, GameTime gametime, int frames, int size, int positionX, int positionY)
         {
+            spriteSheetList.Clear();
+            whichFrame = 0;
             for (int i = 0; i < frames; i++)
             {
-                spriteSheetList.Add(new(i*size, 0, size, size));
+                spriteSheetList.Add(new((i* size), 0, size, size));
             }
-            Animating(spritebatch, spriteSheet, positionX, positionY);
+            Animating(spritebatch, spriteSheet, gametime, positionX, positionY, frames);
         }
-        public void Animating(SpriteBatch spriteBatch, Texture2D spriteSheet, int positionX, int positionY)
+        public void Animating(SpriteBatch spriteBatch, Texture2D spriteSheet, GameTime gametime, int positionX, int positionY, int frames)
         {
-            spriteBatch.Draw(spriteSheet, new Vector2(positionX, positionY), spriteSheetList[0], Color.White);
+            float timer = 0;
+            while (whichFrame < frames)
+            {
+                spriteBatch.Draw(spriteSheet, new Vector2(positionX, positionY), spriteSheetList[whichFrame], Color.White);
+                if (timer > 10000000)
+                {
+                    whichFrame++;
+                    timer = 0;
+                }
+                timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
+            }
         }
     }
 }
