@@ -5,7 +5,7 @@ using Devcade;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Threading;
-using DevcadeGame;
+//using DevcadeGame;
 
 namespace WildWestShootout
 {
@@ -17,6 +17,7 @@ namespace WildWestShootout
         SpriteFont _font;
         Texture2D player1Sprite;
         Texture2D player1Stands;
+        bool canIpressthis = false;
         public static ContentManager _content;
         float[] convertedTimer = {0,0};
         //Clock givemetime; to work. Thanks Ella :>
@@ -38,12 +39,16 @@ namespace WildWestShootout
         public void DrawThis()
         {
             player1Sprite = player1Stands;
-            _spriteBatch.DrawString(_font, $"Quick Draw (1P) gamemode.", new Vector2(0, 0), Color.Black);
+            _spriteBatch.DrawString(_font, $"Quick Draw (1P) gamemode.\n{canIpressthis}", new Vector2(0, 0), Color.Black);
             _spriteBatch.Draw(player1Sprite, new Vector2(32,490), Color.White);	
         }
         //Here's where the game stuff is gonna happen (I say gonna cause as of writing this it doesn't do much)
         public void UpdateThis(GameTime _gameTime)
         {
+            if (Input.GetButton(1, Input.ArcadeButtons.A2))
+            {
+                canIpressthis = true;
+            }
             DrawThis();
         }
     }
