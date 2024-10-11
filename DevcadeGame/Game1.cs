@@ -14,7 +14,6 @@ namespace WildWestShootout
 		string whichGame = "Demo";
 		private SpriteFont theFont;	
 		bool gameSet = false;
-		//bool showthis = false;
 		/// <summary>
 		/// Stores the window dimensions in a rectangle object for easy use
 		/// </summary>
@@ -53,6 +52,7 @@ namespace WildWestShootout
 			#endregion
 			
 			// TODO: Add your initialization logic here
+			// huh?
 
 			windowSize = GraphicsDevice.Viewport.Bounds;
 			
