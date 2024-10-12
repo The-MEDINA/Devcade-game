@@ -28,10 +28,11 @@ namespace DevcadeGame
         }
         /*this method is a monstrosity oh my god.
         I think by doing it this way though, this method is very powerful.
-        at least.. I hope so. As of writing this, I don't mess with like half the arguments.*/
-        public void AnimateThis( Texture2D spriteSheet, int frames, int positionX, int positionY, SpriteBatch spriteBatch, GameTime gametime, List<Rectangle> spriteCutout)
+        at least.. I hope so. As of writing this, I don't mess with like half the arguments.
+        oh my god it got even worse wtf is that draw command LMAO*/
+        public void AnimateThis( Texture2D spriteSheet, int frames, int positionX, int positionY, SpriteBatch spriteBatch, GameTime gametime, List<Rectangle> spriteCutout, SpriteEffects effect)
         {
-            if ((whichFrame < frames-1))
+            if (whichFrame < frames-1)
             {
                 if (timer > 0.2)
                 {
@@ -40,7 +41,7 @@ namespace DevcadeGame
                 }
                 timer+= (float)gametime.ElapsedGameTime.TotalMilliseconds;
             }
-            spriteBatch.Draw(spriteSheet, new Vector2(positionX, positionY), spriteCutout[whichFrame], Color.White);
+            spriteBatch.Draw(spriteSheet, new Vector2(positionX, positionY), spriteCutout[whichFrame], Color.White, 0, new Vector2(0,0), 1, effect, 1);
         }
     }
 }

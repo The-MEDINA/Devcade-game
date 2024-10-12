@@ -90,12 +90,13 @@ namespace WildWestShootout
             }
         }
         //drawing out the game here.
+        //I'm not a big fan of how game logic basically runs twice i'm gonna be honest.
         public void DrawThis(GameTime _gameTime)
         {
             _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
             if (tempTestingLoss == true && !(quickDrawStep == 4))
             {
-                ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost);
+                ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost, 0);
             }
             else
             {
@@ -109,15 +110,15 @@ namespace WildWestShootout
                 }
                 else if(quickDrawStep == 1)
                 {
-                    ugh.AnimateThis(P1UnholstersRaw, 9, 32, 490, _spriteBatch, _gameTime, player1Unholsters);
+                    ugh.AnimateThis(P1UnholstersRaw, 9, 32, 490, _spriteBatch, _gameTime, player1Unholsters, 0);
                 }
                 else if(quickDrawStep == 2 || quickDrawStep == 3)
                 {
-                    ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp);
+                    ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp, 0);
                 }
                 else if (quickDrawStep == 4)
                 {
-                    ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots);
+                    ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots, 0);
                 }
             }
         }
