@@ -30,10 +30,12 @@ namespace WildWestShootout
         public static ContentManager _content;
         int quickDrawStep = 0;
         int enemyStep = 0;
+        int enemyFrames;
         Random rnjesus;
         Animator ugh = new Animator();
         Animator enemyAnimator = new Animator();
-        float countdown;
+        int enemyCountdown;
+        int countdown;
         bool startDraw = false;
         bool tempTestingLoss = false;
         //starts the QuickDraw(1P) gamemode.
@@ -43,6 +45,7 @@ namespace WildWestShootout
             _font = font;
             _content = Content;
             rnjesus = new Random();
+            enemyCountdown = rnjesus.Next(100,1000);
             countdown = rnjesus.Next(1000,10000);
             LoadThis();
         }
@@ -64,7 +67,7 @@ namespace WildWestShootout
             {
                 startDraw = true;
             }
-            EnemyLogic();
+            EnemyLogic(_gameTime, rnjesus.Next(65,1000));
             if (Input.GetButton(1, Input.ArcadeButtons.Menu) && tempTestingLoss == false && !(quickDrawStep == 4))
             {
                 tempTestingLoss = true;
@@ -98,7 +101,6 @@ namespace WildWestShootout
         public void DrawThis(GameTime _gameTime)
         {
             _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
-            enemyAnimator.AnimateThis(enemyStepToDraw, 32, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
             if (tempTestingLoss == true && !(quickDrawStep == 4))
             {
                 ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost, 0);
@@ -125,14 +127,50 @@ namespace WildWestShootout
                 {
                     ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots, 0);
                 }
+                enemyAnimator.AnimateThis(enemyStepToDraw, enemyFrames, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
             }
         }
-        public void EnemyLogic()
+        public void EnemyLogic(GameTime _gameTime,int enemySpeed)
         {
+            if (startDraw == true)
+            {
+                enemyCountdown -= (int)_gameTime.ElapsedGameTime.Milliseconds;
+            }
+            if (enemyCountdown <= 0)
+            {
+                enemyStep++;
+                enemyCountdown = enemySpeed;
+            }
+            /*There might be a bug *somewhere* that's causing the enemy's animations to not play right when enemyStep is incremented by 1.
+            As a bandaid fix I just incremented by 1, ran code, then incremented again.
+            we love bandaid fixes*/
             if (enemyStep == 0)
             {
+                enemyFrames = 1;
                 enemyStepToDraw = player1Stands;
-                enemyCutout = enemyAnimator.CreateCutout(1,128);
+                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+            }
+            if (enemyStep == 1)
+            {
+                enemyFrames = 9;
+                enemyStepToDraw = P1UnholstersRaw;
+                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                enemyStep++;
+            }
+            if (enemyStep == 4)
+            {
+                enemyFrames = 9;
+                enemyStepToDraw = P1GunUpRaw;
+                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                enemyStep++;
+            }
+            // enemyStep 6, he cocks the gun.
+            if (enemyStep == 7)
+            {
+                enemyFrames = 34;
+                enemyStepToDraw = P1ShootsRaw;
+                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                enemyStep++;
             }
         }
     }
