@@ -17,9 +17,12 @@ namespace WildWestShootout
         SpriteFont _font;
         Texture2D player1Stands;
         Texture2D P1UnholstersRaw;
+        Texture2D P1GunUpRaw;
         List<Rectangle>player1Unholsters = new();
+        List<Rectangle>Player1GunUp = new();
         bool canIpressthis = false;
         public static ContentManager _content;
+        int quickDrawStep = 0;
         Animator ugh = new Animator();
         //Clock givemetime; to work. Thanks Ella :>
         //starts the QuickDraw(1P) gamemode.
@@ -35,35 +38,38 @@ namespace WildWestShootout
         {
             player1Stands = _content.Load<Texture2D>("P1Standing - Temp");
             P1UnholstersRaw = _content.Load<Texture2D>("P1Holster - Temp");
+            P1GunUpRaw = _content.Load<Texture2D>("P1PullGun - Temp");
+            player1Unholsters = ugh.CreateCutout(9,128);
+            Player1GunUp = ugh.CreateCutout(9,128);
         }
                 //Here's where the game stuff is gonna happen (I say gonna cause as of writing this it doesn't do much)
         public void UpdateThis(GameTime _gameTime)
         {
-            if (Input.GetButton(1, Input.ArcadeButtons.StickDown))
+            if (Input.GetButton(1, Input.ArcadeButtons.StickDown) && quickDrawStep == 0)
             {
-                canIpressthis = true;
+                quickDrawStep = 1;
             }
-            else
+            else if (Input.GetButton(1, Input.ArcadeButtons.StickUp) && quickDrawStep == 1)
             {
-                canIpressthis = false;
-                /*this won't really be that necessary in this project, but when an animation stops, reset its cutout.
-                Doing so will fix the counters so that it'll play properly the next time it happens.*/
-                player1Unholsters = ugh.CreateCutout(9,128);
+                quickDrawStep = 2;
             }
         }
         //drawing out the game here.
         public void DrawThis(GameTime _gameTime)
         {
             _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
-            if (canIpressthis == true)
+            if (quickDrawStep == 0)
+            {
+                _spriteBatch.Draw(player1Stands, new Vector2(32,490),  Color.White);
+            }
+            else if(quickDrawStep == 1)
             {
                 ugh.AnimateThis(P1UnholstersRaw, 9, 32, 490, _spriteBatch, _gameTime, player1Unholsters);
             }
-            else
+            else if(quickDrawStep == 2)
             {
-                _spriteBatch.Draw(player1Stands, new Vector2(32,490),  Color.White);	
+                 ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp);
             }
-
         }
     }
 }
