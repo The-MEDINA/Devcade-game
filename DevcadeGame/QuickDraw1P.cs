@@ -32,7 +32,6 @@ namespace WildWestShootout
         float countdown;
         bool startDraw = false;
         bool tempTestingLoss = false;
-        //Clock givemetime; to work. Thanks Ella :>
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
         {
