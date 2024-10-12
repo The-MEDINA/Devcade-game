@@ -21,14 +21,18 @@ namespace WildWestShootout
         Texture2D P1GunUpRaw;
         Texture2D P1ShootsRaw;
         Texture2D P1lostRaw;
+        Texture2D enemyStepToDraw;
         List<Rectangle>player1Unholsters = new();
         List<Rectangle>Player1GunUp = new();
         List<Rectangle>PlayerShoots = new();
         List<Rectangle>P1Lost = new();
+        List<Rectangle> enemyCutout = new();
         public static ContentManager _content;
         int quickDrawStep = 0;
+        int enemyStep = 0;
         Random rnjesus;
         Animator ugh = new Animator();
+        Animator enemyAnimator = new Animator();
         float countdown;
         bool startDraw = false;
         bool tempTestingLoss = false;
@@ -56,16 +60,17 @@ namespace WildWestShootout
         public void UpdateThis(GameTime _gameTime)
         {
             countdown -= _gameTime.ElapsedGameTime.Milliseconds;
-            if (countdown >= 0)
+            if (countdown <= 0)
             {
                 startDraw = true;
             }
+            EnemyLogic();
             if (Input.GetButton(1, Input.ArcadeButtons.Menu) && tempTestingLoss == false && !(quickDrawStep == 4))
             {
                 tempTestingLoss = true;
                 P1Lost = ugh.CreateCutout(32,128);
             }
-            else if (tempTestingLoss == false)
+            else if (tempTestingLoss == false && startDraw == true)
             {
                 if (Input.GetButton(1, Input.ArcadeButtons.StickDown) && quickDrawStep == 0)
                 {
@@ -93,6 +98,7 @@ namespace WildWestShootout
         public void DrawThis(GameTime _gameTime)
         {
             _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
+            enemyAnimator.AnimateThis(enemyStepToDraw, 32, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
             if (tempTestingLoss == true && !(quickDrawStep == 4))
             {
                 ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost, 0);
@@ -119,6 +125,14 @@ namespace WildWestShootout
                 {
                     ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots, 0);
                 }
+            }
+        }
+        public void EnemyLogic()
+        {
+            if (enemyStep == 0)
+            {
+                enemyStepToDraw = player1Stands;
+                enemyCutout = enemyAnimator.CreateCutout(1,128);
             }
         }
     }

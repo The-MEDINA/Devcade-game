@@ -29,7 +29,8 @@ namespace DevcadeGame
         /*this method is a monstrosity oh my god.
         I think by doing it this way though, this method is very powerful.
         at least.. I hope so. As of writing this, I don't mess with like half the arguments.
-        oh my god it got even worse wtf is that draw command LMAO*/
+        oh my god it got even worse wtf is that draw command LMAO
+        just adding support for flipping the spritre made it SO much more ugly*/
         public void AnimateThis( Texture2D spriteSheet, int frames, int positionX, int positionY, SpriteBatch spriteBatch, GameTime gametime, List<Rectangle> spriteCutout, SpriteEffects effect)
         {
             if (whichFrame < frames-1)
