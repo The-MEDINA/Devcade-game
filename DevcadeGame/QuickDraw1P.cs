@@ -20,15 +20,18 @@ namespace WildWestShootout
         Texture2D P1UnholstersRaw;
         Texture2D P1GunUpRaw;
         Texture2D P1ShootsRaw;
+        Texture2D P1lostRaw;
         List<Rectangle>player1Unholsters = new();
         List<Rectangle>Player1GunUp = new();
         List<Rectangle>PlayerShoots = new();
+        List<Rectangle>P1Lost = new();
         public static ContentManager _content;
         int quickDrawStep = 0;
         Random rnjesus;
         Animator ugh = new Animator();
         float countdown;
         bool startDraw = false;
+        bool tempTestingLoss = false;
         //Clock givemetime; to work. Thanks Ella :>
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
@@ -47,6 +50,7 @@ namespace WildWestShootout
             P1UnholstersRaw = _content.Load<Texture2D>("P1Holster - Temp");
             P1GunUpRaw = _content.Load<Texture2D>("P1PullGun - Temp");
             P1ShootsRaw = _content.Load<Texture2D>("P1Shoots - Temp");
+            P1lostRaw = _content.Load<Texture2D>("P1Lost - Temp");
         }
         /*Here's where game logic and cutouts are done.
         cutouts for any sprites MUST be done here, else they don't animate properly.*/
@@ -57,49 +61,64 @@ namespace WildWestShootout
             {
                 startDraw = true;
             }
-            if (Input.GetButton(1, Input.ArcadeButtons.StickDown) && quickDrawStep == 0)
+            if (Input.GetButton(1, Input.ArcadeButtons.Menu) && tempTestingLoss == false && !(quickDrawStep == 4))
             {
-                quickDrawStep = 1;
-                player1Unholsters = ugh.CreateCutout(9,128);
+                tempTestingLoss = true;
+                P1Lost = ugh.CreateCutout(32,128);
             }
-            else if (Input.GetButton(1, Input.ArcadeButtons.StickUp) && quickDrawStep == 1)
+            else if (tempTestingLoss == false)
             {
-                quickDrawStep = 2;
-                Player1GunUp = ugh.CreateCutout(9,128);
-            }
-            else if (Input.GetButton(1, Input.ArcadeButtons.A1) && quickDrawStep == 2)
-            {
-                quickDrawStep = 3;
-            }
-            else if(Input.GetButton(1, Input.ArcadeButtons.A2) && quickDrawStep == 3)
-            {
-                quickDrawStep = 4;
-                PlayerShoots = ugh.CreateCutout(34,128);
+                if (Input.GetButton(1, Input.ArcadeButtons.StickDown) && quickDrawStep == 0)
+                {
+                    quickDrawStep = 1;
+                    player1Unholsters = ugh.CreateCutout(9,128);
+                }
+                else if (Input.GetButton(1, Input.ArcadeButtons.StickUp) && quickDrawStep == 1)
+                {
+                    quickDrawStep = 2;
+                    Player1GunUp = ugh.CreateCutout(9,128);
+                }
+                else if (Input.GetButton(1, Input.ArcadeButtons.A1) && quickDrawStep == 2)
+                {
+                    quickDrawStep = 3;
+                }
+                else if(Input.GetButton(1, Input.ArcadeButtons.A2) && quickDrawStep == 3)
+                {
+                    quickDrawStep = 4;
+                    PlayerShoots = ugh.CreateCutout(34,128);
+                }
             }
         }
         //drawing out the game here.
         public void DrawThis(GameTime _gameTime)
         {
             _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
-            if (countdown <= 0)
+            if (tempTestingLoss == true && !(quickDrawStep == 4))
             {
-                _spriteBatch.DrawString(_font, "Draw!", new Vector2(100, 100), Color.Black);
+                ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost);
             }
-            if (quickDrawStep == 0)
+            else
             {
-                _spriteBatch.Draw(player1Stands, new Vector2(32,490),  Color.White);
-            }
-            else if(quickDrawStep == 1)
-            {
-                ugh.AnimateThis(P1UnholstersRaw, 9, 32, 490, _spriteBatch, _gameTime, player1Unholsters);
-            }
-            else if(quickDrawStep == 2 || quickDrawStep == 3)
-            {
-                ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp);
-            }
-            else if (quickDrawStep == 4)
-            {
-                ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots);
+                if (countdown <= 0)
+                {
+                    _spriteBatch.DrawString(_font, "Draw!", new Vector2(100, 100), Color.Black);
+                }
+                if (quickDrawStep == 0)
+                {
+                    _spriteBatch.Draw(player1Stands, new Vector2(32,490),  Color.White);
+                }
+                else if(quickDrawStep == 1)
+                {
+                    ugh.AnimateThis(P1UnholstersRaw, 9, 32, 490, _spriteBatch, _gameTime, player1Unholsters);
+                }
+                else if(quickDrawStep == 2 || quickDrawStep == 3)
+                {
+                    ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp);
+                }
+                else if (quickDrawStep == 4)
+                {
+                    ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots);
+                }
             }
         }
     }
