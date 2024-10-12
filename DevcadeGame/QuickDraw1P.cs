@@ -24,7 +24,7 @@ namespace WildWestShootout
         public static ContentManager _content;
         float aTimer = 0;
         int whichFrame = 0;
-        Animator ugh;
+        Animator ugh = new Animator();
         //Clock givemetime; to work. Thanks Ella :>
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
@@ -39,11 +39,12 @@ namespace WildWestShootout
         {
             player1Stands = _content.Load<Texture2D>("P1Standing - Temp");
             P1UnholstersRaw = _content.Load<Texture2D>("P1Holster - Temp");
+            player1Unholsters = ugh.PrepareToAnimate(9,128);
             //all my prevous attempts to animate failed so now i'm scared to do it in a separate class.
-            for (int i = 0; i < 9; i++)
+            /*for (int i = 0; i < 9; i++)
             {
                 player1Unholsters.Add(new(i*128,0,128,128));
-            }
+            }*/
 
         }
         //drawing out the game here.
@@ -53,7 +54,9 @@ namespace WildWestShootout
             {
 
                 _spriteBatch.DrawString(_font, "bang. :>", new Vector2(0, 0), Color.Black);
-                if (whichFrame < 8)
+                ugh.Animating(P1UnholstersRaw, 9, 32, 490, _spriteBatch, _gameTime, player1Unholsters);
+                //ugh.PrepareToAnimate(_spriteBatch, P1UnholstersRaw, _gameTime, 9, 128, 32, 490);
+                /*if (whichFrame < 8)
                 {
                     if (aTimer > 0.2)
                     {
@@ -63,7 +66,7 @@ namespace WildWestShootout
                     aTimer+=_gameTime.ElapsedGameTime.Milliseconds;
                 }
                  _spriteBatch.Draw(P1UnholstersRaw, new Vector2(32,490),  player1Unholsters[whichFrame], Color.White);
-            }
+            */}
             else
             {
                 _spriteBatch.Draw(player1Stands, new Vector2(32,490),  Color.White);	
