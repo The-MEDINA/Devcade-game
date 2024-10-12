@@ -47,8 +47,8 @@ namespace WildWestShootout
             _font = font;
             _content = Content;
             rnjesus = new Random();
-            enemyCountdown = rnjesus.Next(100,1000);
-            countdown = rnjesus.Next(0,1001);
+            enemyCountdown = rnjesus.Next(65,66);
+            countdown = rnjesus.Next(1000,10001);
             LoadThis();
         }
         //loading assets here.
@@ -65,19 +65,23 @@ namespace WildWestShootout
         public void UpdateThis(GameTime _gameTime)
         {
             countdown -= _gameTime.ElapsedGameTime.Milliseconds;
+            if (Input.GetButton(1, Input.ArcadeButtons.Menu))
+            {
+                ResetGame();
+            }
             if (countdown <= 0)
             {
                 startDraw = true;
             }
-            EnemyLogic(_gameTime, rnjesus.Next(65,1000));
-            if (Input.GetButton(1, Input.ArcadeButtons.Menu) && tempTestingLoss == false && !(quickDrawStep == 4))
-            {
-                tempTestingLoss = true;
-            }
-            else if (tempTestingLoss == true && unstick == false)
+            EnemyLogic(_gameTime, rnjesus.Next(65,66));
+            if (tempTestingLoss == true && unstick == false)
             {
                 P1Lost = ugh.CreateCutout(32,128);
                 unstick = true;
+            }
+            if (enemyStep >= 7 && !(quickDrawStep == 4))
+            {
+                tempTestingLoss = true;
             }
             else if (tempTestingLoss == false && startDraw == true)
             {
@@ -190,6 +194,17 @@ namespace WildWestShootout
                     enemyStep++;
                 }
             }
+        }
+        public void ResetGame()
+        {
+            unstick = false;
+            unstickEnemy = false;
+            quickDrawStep = 0;
+            enemyStep = 0;
+            tempTestingLoss = false;
+            enemyCountdown = rnjesus.Next(65,66);
+            countdown = rnjesus.Next(100,10001);
+            startDraw = false;
         }
     }
 }
