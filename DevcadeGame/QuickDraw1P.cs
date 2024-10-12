@@ -20,7 +20,6 @@ namespace WildWestShootout
         Texture2D P1GunUpRaw;
         List<Rectangle>player1Unholsters = new();
         List<Rectangle>Player1GunUp = new();
-        bool canIpressthis = false;
         public static ContentManager _content;
         int quickDrawStep = 0;
         Animator ugh = new Animator();
@@ -39,19 +38,20 @@ namespace WildWestShootout
             player1Stands = _content.Load<Texture2D>("P1Standing - Temp");
             P1UnholstersRaw = _content.Load<Texture2D>("P1Holster - Temp");
             P1GunUpRaw = _content.Load<Texture2D>("P1PullGun - Temp");
-            player1Unholsters = ugh.CreateCutout(9,128);
-            Player1GunUp = ugh.CreateCutout(9,128);
         }
-                //Here's where the game stuff is gonna happen (I say gonna cause as of writing this it doesn't do much)
+        /*Here's where game logic and cutouts are done.
+        cutouts for any sprites MUST be done here, else they don't animate properly.*/
         public void UpdateThis(GameTime _gameTime)
         {
             if (Input.GetButton(1, Input.ArcadeButtons.StickDown) && quickDrawStep == 0)
             {
                 quickDrawStep = 1;
+                player1Unholsters = ugh.CreateCutout(9,128);
             }
             else if (Input.GetButton(1, Input.ArcadeButtons.StickUp) && quickDrawStep == 1)
             {
                 quickDrawStep = 2;
+                Player1GunUp = ugh.CreateCutout(9,128);
             }
         }
         //drawing out the game here.
@@ -68,7 +68,7 @@ namespace WildWestShootout
             }
             else if(quickDrawStep == 2)
             {
-                 ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp);
+                ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp);
             }
         }
     }

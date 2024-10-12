@@ -31,7 +31,7 @@ namespace DevcadeGame
         at least.. I hope so. As of writing this, I don't mess with like half the arguments.*/
         public void AnimateThis( Texture2D spriteSheet, int frames, int positionX, int positionY, SpriteBatch spriteBatch, GameTime gametime, List<Rectangle> spriteCutout)
         {
-            if (whichFrame < frames-1)
+            if ((whichFrame < frames-1))
             {
                 if (timer > 0.2)
                 {
