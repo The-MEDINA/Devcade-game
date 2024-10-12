@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using DevcadeGame;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 //using DevcadeGame;
 
 namespace WildWestShootout
@@ -18,8 +19,10 @@ namespace WildWestShootout
         Texture2D player1Stands;
         Texture2D P1UnholstersRaw;
         Texture2D P1GunUpRaw;
+        Texture2D P1ShootsRaw;
         List<Rectangle>player1Unholsters = new();
         List<Rectangle>Player1GunUp = new();
+        List<Rectangle>PlayerShoots = new();
         public static ContentManager _content;
         int quickDrawStep = 0;
         Random rnjesus;
@@ -43,6 +46,7 @@ namespace WildWestShootout
             player1Stands = _content.Load<Texture2D>("P1Standing - Temp");
             P1UnholstersRaw = _content.Load<Texture2D>("P1Holster - Temp");
             P1GunUpRaw = _content.Load<Texture2D>("P1PullGun - Temp");
+            P1ShootsRaw = _content.Load<Texture2D>("P1Shoots - Temp");
         }
         /*Here's where game logic and cutouts are done.
         cutouts for any sprites MUST be done here, else they don't animate properly.*/
@@ -67,6 +71,11 @@ namespace WildWestShootout
             {
                 quickDrawStep = 3;
             }
+            else if(Input.GetButton(1, Input.ArcadeButtons.A2) && quickDrawStep == 3)
+            {
+                quickDrawStep = 4;
+                PlayerShoots = ugh.CreateCutout(34,128);
+            }
         }
         //drawing out the game here.
         public void DrawThis(GameTime _gameTime)
@@ -87,6 +96,10 @@ namespace WildWestShootout
             else if(quickDrawStep == 2 || quickDrawStep == 3)
             {
                 ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp);
+            }
+            else if (quickDrawStep == 4)
+            {
+                ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots);
             }
         }
     }
