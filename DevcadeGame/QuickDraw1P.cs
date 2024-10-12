@@ -30,6 +30,8 @@ namespace WildWestShootout
         public static ContentManager _content;
         int quickDrawStep = 0;
         int enemyStep = 0;
+        bool unstick = false;
+        bool unstickEnemy = false;
         int enemyFrames;
         Random rnjesus;
         Animator ugh = new Animator();
@@ -46,7 +48,7 @@ namespace WildWestShootout
             _content = Content;
             rnjesus = new Random();
             enemyCountdown = rnjesus.Next(100,1000);
-            countdown = rnjesus.Next(1000,10000);
+            countdown = rnjesus.Next(0,1001);
             LoadThis();
         }
         //loading assets here.
@@ -71,7 +73,11 @@ namespace WildWestShootout
             if (Input.GetButton(1, Input.ArcadeButtons.Menu) && tempTestingLoss == false && !(quickDrawStep == 4))
             {
                 tempTestingLoss = true;
+            }
+            else if (tempTestingLoss == true && unstick == false)
+            {
                 P1Lost = ugh.CreateCutout(32,128);
+                unstick = true;
             }
             else if (tempTestingLoss == false && startDraw == true)
             {
@@ -101,6 +107,7 @@ namespace WildWestShootout
         public void DrawThis(GameTime _gameTime)
         {
             _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
+            enemyAnimator.AnimateThis(enemyStepToDraw, enemyFrames, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
             if (tempTestingLoss == true && !(quickDrawStep == 4))
             {
                 ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost, 0);
@@ -127,7 +134,6 @@ namespace WildWestShootout
                 {
                     ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots, 0);
                 }
-                enemyAnimator.AnimateThis(enemyStepToDraw, enemyFrames, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
             }
         }
         public void EnemyLogic(GameTime _gameTime,int enemySpeed)
@@ -144,33 +150,45 @@ namespace WildWestShootout
             /*There might be a bug *somewhere* that's causing the enemy's animations to not play right when enemyStep is incremented by 1.
             As a bandaid fix I just incremented by 1, ran code, then incremented again.
             we love bandaid fixes*/
-            if (enemyStep == 0)
+            if (quickDrawStep == 4)
             {
-                enemyFrames = 1;
-                enemyStepToDraw = player1Stands;
-                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                enemyFrames = 32;
+                enemyStepToDraw = P1lostRaw;
+                if (unstickEnemy == false)
+                    enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                unstickEnemy = true;
             }
-            if (enemyStep == 1)
+            else
             {
-                enemyFrames = 9;
-                enemyStepToDraw = P1UnholstersRaw;
-                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
-                enemyStep++;
-            }
-            if (enemyStep == 4)
-            {
-                enemyFrames = 9;
-                enemyStepToDraw = P1GunUpRaw;
-                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
-                enemyStep++;
-            }
+                if (enemyStep == 0)
+                {
+                    enemyFrames = 1;
+                    enemyStepToDraw = player1Stands;
+                    enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                }
+                if (enemyStep == 1)
+                {
+                    enemyFrames = 9;
+                    enemyStepToDraw = P1UnholstersRaw;
+                    enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                    enemyStep++;
+                }
+                if (enemyStep == 4)
+                {
+                    enemyFrames = 9;
+                    enemyStepToDraw = P1GunUpRaw;
+                    enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                    enemyStep++;
+                }
             // enemyStep 6, he cocks the gun.
-            if (enemyStep == 7)
-            {
-                enemyFrames = 34;
-                enemyStepToDraw = P1ShootsRaw;
-                enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
-                enemyStep++;
+                if (enemyStep == 7)
+                {
+                    enemyFrames = 34;
+                    enemyStepToDraw = P1ShootsRaw;
+                    enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                    tempTestingLoss = true;
+                    enemyStep++;
+                }
             }
         }
     }
