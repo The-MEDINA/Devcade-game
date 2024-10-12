@@ -13,7 +13,9 @@ namespace DevcadeGame
         List<Rectangle> spriteSheetList = new();
         int whichFrame = 0;
         float timer = 0;
-        public List<Rectangle> PrepareToAnimate(int frames, int size)
+        /*creates the rectangle that'll be used for the animations. Returns a list of rectangles that you'll need to save.
+        You can't just call this method in AnimateThis. I tried. :<*/
+        public List<Rectangle> CreateCutout(int frames, int size)
         {
             spriteSheetList.Clear();
             timer = 0;
@@ -23,9 +25,11 @@ namespace DevcadeGame
                 spriteSheetList.Add(new((i* size), 0, size, size));
             }
             return spriteSheetList;
-            //Animating(spritebatch, spriteSheet, gametime, positionX, positionY, frames);
         }
-        public void Animating( Texture2D spriteSheet, int frames, int positionX, int positionY, SpriteBatch spriteBatch, GameTime gametime, List<Rectangle> spriteCutout)
+        /*this method is a monstrosity oh my god.
+        I think by doing it this way though, this method is very powerful.
+        at least.. I hope so. As of writing this, I don't mess with like half the arguments.*/
+        public void AnimateThis( Texture2D spriteSheet, int frames, int positionX, int positionY, SpriteBatch spriteBatch, GameTime gametime, List<Rectangle> spriteCutout)
         {
             if (whichFrame < frames-1)
             {
