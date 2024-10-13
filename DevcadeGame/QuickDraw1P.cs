@@ -8,8 +8,7 @@ using System.Threading;
 using DevcadeGame;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
-//using DevcadeGame;
-
+using Microsoft.Xna.Framework.Audio;
 namespace WildWestShootout
 {
 	public class QuickDraw1P:Game1
@@ -27,6 +26,7 @@ namespace WildWestShootout
         List<Rectangle>PlayerShoots = new();
         List<Rectangle>P1Lost = new();
         List<Rectangle> enemyCutout = new();
+        List<SoundEffect> soundEffects = new();
         public static ContentManager _content;
         int quickDrawStep = 0;
         int enemyStep = 0;
@@ -47,7 +47,7 @@ namespace WildWestShootout
             _font = font;
             _content = Content;
             rnjesus = new Random();
-            enemyCountdown = rnjesus.Next(65,66);
+            enemyCountdown = rnjesus.Next(65,1000);
             countdown = rnjesus.Next(1000,10001);
             LoadThis();
         }
@@ -59,6 +59,7 @@ namespace WildWestShootout
             P1GunUpRaw = _content.Load<Texture2D>("P1PullGun - Temp");
             P1ShootsRaw = _content.Load<Texture2D>("P1Shoots - Temp");
             P1lostRaw = _content.Load<Texture2D>("P1Lost - Temp");
+            soundEffects.Add(Content.Load<SoundEffect>("impactful shot"));
         }
         /*Here's where game logic and cutouts are done.
         cutouts for any sprites MUST be done here, else they don't animate properly.*/
@@ -133,6 +134,10 @@ namespace WildWestShootout
                 else if(quickDrawStep == 2 || quickDrawStep == 3)
                 {
                     ugh.AnimateThis(P1GunUpRaw, 9, 32, 490, _spriteBatch, _gameTime, Player1GunUp, 0);
+                    if (quickDrawStep == 3)
+                    {
+                        _spriteBatch.DrawString(_font, "click", new Vector2(32, 426), Color.Black);
+                    }
                 }
                 else if (quickDrawStep == 4)
                 {
@@ -151,15 +156,15 @@ namespace WildWestShootout
                 enemyStep++;
                 enemyCountdown = enemySpeed;
             }
-            /*There might be a bug *somewhere* that's causing the enemy's animations to not play right when enemyStep is incremented by 1.
-            As a bandaid fix I just incremented by 1, ran code, then incremented again.
-            we love bandaid fixes*/
             if (quickDrawStep == 4)
             {
                 enemyFrames = 32;
                 enemyStepToDraw = P1lostRaw;
                 if (unstickEnemy == false)
+                {
                     enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
+                    soundEffects[0].CreateInstance().Play();
+                }
                 unstickEnemy = true;
             }
             else
@@ -202,7 +207,7 @@ namespace WildWestShootout
             quickDrawStep = 0;
             enemyStep = 0;
             tempTestingLoss = false;
-            enemyCountdown = rnjesus.Next(65,66);
+            enemyCountdown = rnjesus.Next(65,1000);
             countdown = rnjesus.Next(100,10001);
             startDraw = false;
         }

@@ -49,6 +49,18 @@
 /processorParam:TextureFormat=Color
 /build:1 2.png
 
+#begin impactful shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:impactful shot.wav
+
+#begin intro noise.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:intro noise.wav
+
 #begin P1Holster - Temp.png
 /importer:TextureImporter
 /processor:TextureProcessor
