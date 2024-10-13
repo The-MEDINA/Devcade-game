@@ -33,12 +33,14 @@ namespace WildWestShootout
         bool unstick = false;
         bool unstickEnemy = false;
         int enemyFrames;
+        int startTimer = 3000;
         Random rnjesus;
         Animator ugh = new Animator();
         Animator enemyAnimator = new Animator();
         int enemyCountdown;
         int countdown;
         bool startDraw = false;
+        int highscore = 0;
         bool tempTestingLoss = false;
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
@@ -47,7 +49,7 @@ namespace WildWestShootout
             _font = font;
             _content = Content;
             rnjesus = new Random();
-            enemyCountdown = rnjesus.Next(65,1000);
+            enemyCountdown = rnjesus.Next(100,1000);
             countdown = rnjesus.Next(1000,10001);
             LoadThis();
         }
@@ -60,50 +62,55 @@ namespace WildWestShootout
             P1ShootsRaw = _content.Load<Texture2D>("P1Shoots - Temp");
             P1lostRaw = _content.Load<Texture2D>("P1Lost - Temp");
             soundEffects.Add(Content.Load<SoundEffect>("impactful shot"));
+            soundEffects.Add(Content.Load<SoundEffect>("intro noise"));
         }
         /*Here's where game logic and cutouts are done.
         cutouts for any sprites MUST be done here, else they don't animate properly.*/
         public void UpdateThis(GameTime _gameTime)
         {
             countdown -= _gameTime.ElapsedGameTime.Milliseconds;
-            if (Input.GetButton(1, Input.ArcadeButtons.Menu))
+            EnemyLogic(_gameTime, rnjesus.Next(65,1000));
+            if (StartGame(_gameTime) == true)
             {
-                ResetGame();
-            }
-            if (countdown <= 0)
-            {
-                startDraw = true;
-            }
-            EnemyLogic(_gameTime, rnjesus.Next(65,66));
-            if (tempTestingLoss == true && unstick == false)
-            {
-                P1Lost = ugh.CreateCutout(32,128);
-                unstick = true;
-            }
-            if (enemyStep >= 7 && !(quickDrawStep == 4))
-            {
-                tempTestingLoss = true;
-            }
-            else if (tempTestingLoss == false && startDraw == true)
-            {
-                if (Input.GetButton(1, Input.ArcadeButtons.StickDown) && quickDrawStep == 0)
+                if (Input.GetButton(1, Input.ArcadeButtons.Menu))
                 {
-                    quickDrawStep = 1;
-                    player1Unholsters = ugh.CreateCutout(9,128);
+                    ResetGame();
                 }
-                else if (Input.GetButton(1, Input.ArcadeButtons.StickUp) && quickDrawStep == 1)
+                if (countdown <= 0)
                 {
-                    quickDrawStep = 2;
-                    Player1GunUp = ugh.CreateCutout(9,128);
+                    startDraw = true;
                 }
-                else if (Input.GetButton(1, Input.ArcadeButtons.A1) && quickDrawStep == 2)
+                if (tempTestingLoss == true && unstick == false)
                 {
-                    quickDrawStep = 3;
+                    P1Lost = ugh.CreateCutout(32,128);
+                    soundEffects[0].CreateInstance().Play();
+                    unstick = true;
                 }
-                else if(Input.GetButton(1, Input.ArcadeButtons.A2) && quickDrawStep == 3)
+                if (enemyStep >= 7 && !(quickDrawStep == 4))
                 {
-                    quickDrawStep = 4;
-                    PlayerShoots = ugh.CreateCutout(34,128);
+                    tempTestingLoss = true;
+                }
+                else if (tempTestingLoss == false && startDraw == true)
+                {
+                    if (Input.GetButton(1, Input.ArcadeButtons.StickDown) && quickDrawStep == 0)
+                    {
+                        quickDrawStep = 1;
+                        player1Unholsters = ugh.CreateCutout(9,128);
+                    }
+                    else if (Input.GetButton(1, Input.ArcadeButtons.StickUp) && quickDrawStep == 1)
+                    {
+                        quickDrawStep = 2;
+                        Player1GunUp = ugh.CreateCutout(9,128);
+                    }
+                    else if (Input.GetButton(1, Input.ArcadeButtons.A1) && quickDrawStep == 2)
+                    {
+                        quickDrawStep = 3;
+                    }
+                    else if(Input.GetButton(1, Input.ArcadeButtons.A2) && quickDrawStep == 3)
+                    {
+                        quickDrawStep = 4;
+                        PlayerShoots = ugh.CreateCutout(34,128);
+                    }
                 }
             }
         }
@@ -112,7 +119,12 @@ namespace WildWestShootout
         public void DrawThis(GameTime _gameTime)
         {
             _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
+            _spriteBatch.DrawString(_font, $"HighScore: {highscore:D8}", new Vector2(0, 900), Color.Black);
             enemyAnimator.AnimateThis(enemyStepToDraw, enemyFrames, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
+            if (enemyStep == 6)
+            {
+                _spriteBatch.DrawString(_font, "click", new Vector2(250, 426), Color.Black);
+            }
             if (tempTestingLoss == true && !(quickDrawStep == 4))
             {
                 ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost, 0);
@@ -200,6 +212,22 @@ namespace WildWestShootout
                 }
             }
         }
+        public bool StartGame(GameTime gameTime)
+        {
+            if (startTimer == 3000)
+            {
+                soundEffects[1].CreateInstance().Play();
+            }
+            if (startTimer <= 0)
+            {
+                return true;
+            }
+            else
+            {
+                startTimer-= gameTime.ElapsedGameTime.Milliseconds;
+            }
+            return false;
+        }
         public void ResetGame()
         {
             unstick = false;
@@ -207,9 +235,10 @@ namespace WildWestShootout
             quickDrawStep = 0;
             enemyStep = 0;
             tempTestingLoss = false;
-            enemyCountdown = rnjesus.Next(65,1000);
+            enemyCountdown = rnjesus.Next(100,1000);
             countdown = rnjesus.Next(100,10001);
             startDraw = false;
+            startTimer = 3000;
         }
     }
 }
