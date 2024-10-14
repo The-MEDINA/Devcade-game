@@ -49,18 +49,6 @@
 /processorParam:TextureFormat=Color
 /build:1 2.png
 
-#begin BACKGROUND.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:BACKGROUND.png
-
 #begin impactful shot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
