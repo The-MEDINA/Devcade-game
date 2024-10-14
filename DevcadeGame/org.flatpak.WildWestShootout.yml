@@ -1,0 +1,15 @@
+id: org.flatpak.WildWestShootout
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: WildWestShootout
+modules:
+  - name: WildWestShootout
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 WildWestShootout.sh /app/bin/WildWestShootout
+    sources:
+      - type: script
+        dest-filename: WildWestShootout.sh
+        commands:
+          - echo "Wild West Shootout game."

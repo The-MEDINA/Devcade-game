@@ -1,0 +1,27 @@
+{
+  "id" : "org.flatpak.WildWestShootout",
+  "runtime" : "org.freedesktop.Platform",
+  "runtime-version" : "23.08",
+  "runtime-commit" : "cb2bd72f6b227a6ef91c194b21880d95bee4e198c4ab7cb0fa7bea30649338ae",
+  "sdk" : "org.freedesktop.Sdk",
+  "sdk-commit" : "410bebaffd2d604cd00ee80ee597bc889b0a6b015a850290d64b4c13c68eedde",
+  "command" : "WildWestShootout",
+  "modules" : [
+    {
+      "name" : "WildWestShootout",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "commands" : [
+            "echo \"Wild West Shootout game.\""
+          ],
+          "dest-filename" : "WildWestShootout.sh",
+          "type" : "script"
+        }
+      ],
+      "build-commands" : [
+        "install -Dm755 WildWestShootout.sh /app/bin/WildWestShootout"
+      ]
+    }
+  ]
+}
