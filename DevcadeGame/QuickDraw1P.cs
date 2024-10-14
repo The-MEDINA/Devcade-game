@@ -34,6 +34,7 @@ namespace WildWestShootout
         bool unstickEnemy = false;
         int enemyFrames;
         int startTimer = 3000;
+        int pauseTimer = 3000;
         Random rnjesus;
         Animator ugh = new Animator();
         Animator enemyAnimator = new Animator();
@@ -42,6 +43,8 @@ namespace WildWestShootout
         bool startDraw = false;
         int highscore = 0;
         bool tempTestingLoss = false;
+        int upperBound = 300;
+        int roundCount = 1;
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
         {
@@ -49,7 +52,7 @@ namespace WildWestShootout
             _font = font;
             _content = Content;
             rnjesus = new Random();
-            enemyCountdown = rnjesus.Next(100,1000);
+            enemyCountdown = rnjesus.Next(100,upperBound);
             countdown = rnjesus.Next(1000,10001);
             LoadThis();
         }
@@ -68,10 +71,10 @@ namespace WildWestShootout
         cutouts for any sprites MUST be done here, else they don't animate properly.*/
         public void UpdateThis(GameTime _gameTime)
         {
-            countdown -= _gameTime.ElapsedGameTime.Milliseconds;
-            EnemyLogic(_gameTime, rnjesus.Next(65,1000));
+            EnemyLogic(_gameTime, rnjesus.Next(65,upperBound));
             if (StartGame(_gameTime) == true)
             {
+                countdown -= _gameTime.ElapsedGameTime.Milliseconds;
                 if (Input.GetButton(1, Input.ArcadeButtons.Menu))
                 {
                     ResetGame();
@@ -111,6 +114,13 @@ namespace WildWestShootout
                         quickDrawStep = 4;
                         PlayerShoots = ugh.CreateCutout(34,128);
                     }
+                    else if (quickDrawStep == 4)
+                    {
+                        if (PauseGame(_gameTime) == false)
+                        {
+                            NextRound();
+                        }
+                    }
                 }
             }
         }
@@ -118,7 +128,7 @@ namespace WildWestShootout
         //I'm not a big fan of how game logic basically runs twice i'm gonna be honest.
         public void DrawThis(GameTime _gameTime)
         {
-            _spriteBatch.DrawString(_font, "Quick Draw (1P) Gamemode.", new Vector2(0, 0), Color.Black);
+            _spriteBatch.DrawString(_font, $"Round: {roundCount}", new Vector2(0, 200), Color.Black);
             _spriteBatch.DrawString(_font, $"HighScore: {highscore:D8}", new Vector2(0, 900), Color.Black);
             enemyAnimator.AnimateThis(enemyStepToDraw, enemyFrames, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
             if (enemyStep == 6)
@@ -128,12 +138,13 @@ namespace WildWestShootout
             if (tempTestingLoss == true && !(quickDrawStep == 4))
             {
                 ugh.AnimateThis(P1lostRaw, 32, 32, 490, _spriteBatch, _gameTime, P1Lost, 0);
+                _spriteBatch.DrawString(_font, $"You lose! \nPress Menu button to retry.", new Vector2(0, 232), Color.Black);
             }
             else
             {
                 if (countdown <= 0)
                 {
-                    _spriteBatch.DrawString(_font, "Draw!", new Vector2(100, 100), Color.Black);
+                    _spriteBatch.DrawString(_font, "Draw!", new Vector2(150, 300), Color.Black);
                 }
                 if (quickDrawStep == 0)
                 {
@@ -154,6 +165,7 @@ namespace WildWestShootout
                 else if (quickDrawStep == 4)
                 {
                     ugh.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots, 0);
+                    _spriteBatch.DrawString(_font, $"Nice draw! You win!", new Vector2(0, 232), Color.Black);
                 }
             }
         }
@@ -228,17 +240,51 @@ namespace WildWestShootout
             }
             return false;
         }
+        public bool PauseGame(GameTime gameTime)
+        {
+            if (pauseTimer <= 0)
+            {
+                pauseTimer = 3000;
+                return false;
+            }
+            else
+            {
+                pauseTimer-= gameTime.ElapsedGameTime.Milliseconds;
+                return true;
+            }
+        }
         public void ResetGame()
         {
+            highscore = 0;
+            roundCount = 1;
             unstick = false;
             unstickEnemy = false;
             quickDrawStep = 0;
             enemyStep = 0;
             tempTestingLoss = false;
-            enemyCountdown = rnjesus.Next(100,1000);
+            enemyCountdown = rnjesus.Next(100,upperBound);
             countdown = rnjesus.Next(100,10001);
             startDraw = false;
             startTimer = 3000;
+        }
+        public void NextRound()
+        {
+            highscore+= (1000+((roundCount-1)*10));
+            roundCount++;
+            unstick = false;
+            unstickEnemy = false;
+            quickDrawStep = 0;
+            enemyStep = 0;
+            tempTestingLoss = false;
+            enemyCountdown = rnjesus.Next(100,upperBound);
+            countdown = rnjesus.Next(100,10001);
+            startDraw = false;
+            startTimer = 3000;
+            upperBound = (int)(upperBound*.95);
+            if (upperBound < 70)
+            {
+                upperBound = 70;
+            } 
         }
     }
 }
