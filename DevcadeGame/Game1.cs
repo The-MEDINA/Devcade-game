@@ -80,7 +80,9 @@ namespace WildWestShootout
 			_spriteBatch.Begin();
 			if (whichGame.Equals("Demo"))
 			{
-			_spriteBatch.DrawString(theFont, "Title card & menu here.", new Vector2(0, 0), Color.Black);		
+			_spriteBatch.DrawString(theFont, "Wild West Shootout!\nHow to play:", new Vector2(50, 300), Color.Black);	
+			_spriteBatch.DrawString(theFont, "When it says draw...\nFlick the stick down\nFlick the stick up\nPress red button\nPress blue button\nDo it fast and win!\n\nPress red button \nto start.", new Vector2(50, 450), Color.Black);
+			_spriteBatch.DrawString(theFont, "Version CSH Game Jam 2024", new Vector2(0, 900), Color.Black);			
 			}
 			else if (whichGame.Equals("QuickDraw1P"))
 			{
