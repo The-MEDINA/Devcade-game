@@ -21,7 +21,6 @@ namespace WildWestShootout
         Texture2D P1ShootsRaw;
         Texture2D P1lostRaw;
         Texture2D enemyStepToDraw;
-        Texture2D background;
         List<Rectangle>player1Unholsters = new();
         List<Rectangle>Player1GunUp = new();
         List<Rectangle>PlayerShoots = new();
@@ -67,7 +66,6 @@ namespace WildWestShootout
             P1lostRaw = _content.Load<Texture2D>("P1Lost - Temp");
             soundEffects.Add(Content.Load<SoundEffect>("impactful shot"));
             soundEffects.Add(Content.Load<SoundEffect>("intro noise"));
-            background = _content.Load<Texture2D>("BACKGROUND");
         }
         /*Here's where game logic and cutouts are done.
         cutouts for any sprites MUST be done here, else they don't animate properly.*/
@@ -130,11 +128,10 @@ namespace WildWestShootout
         //I'm not a big fan of how game logic basically runs twice i'm gonna be honest.
         public void DrawThis(GameTime _gameTime)
         {
-            _spriteBatch.Draw(background, new Vector2(0,432),  Color.White);
             _spriteBatch.DrawString(_font, $"Round: {roundCount}", new Vector2(0, 200), Color.Black);
             _spriteBatch.DrawString(_font, $"HighScore: {highscore:D8}", new Vector2(0, 900), Color.Black);
             enemyAnimator.AnimateThis(enemyStepToDraw, enemyFrames, 250, 490, _spriteBatch, _gameTime, enemyCutout, (SpriteEffects)1);
-            if (enemyStep == 6 && unstickEnemy == false)
+            if (enemyStep == 6)
             {
                 _spriteBatch.DrawString(_font, "click", new Vector2(250, 426), Color.Black);
             }
