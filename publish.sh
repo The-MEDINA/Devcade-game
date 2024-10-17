@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Correct dimensions for banner
-CORRECT_B_W=800
-CORRECT_B_H=450
+CORRECT_B_W=500
+CORRECT_B_H=250
 
-WORK_DIR=/tmp/devcade_publishing_script_temp
+WORK_DIR=/tmp/WildWestShootout_publishing_script_temp
 #ZIP_NAME=devcade-publishing-script-output # Oops actually it has to be the name of the game.
 
 HOME_BASE_DIR=$(pwd)
