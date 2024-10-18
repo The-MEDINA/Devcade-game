@@ -28,20 +28,13 @@ namespace DevcadeGame
         }
         /*this method is a monstrosity oh my god.
         I think by doing it this way though, this method is very powerful.
-        at least.. I hope so. As of writing this, I don't mess with like half the arguments.
-        oh my god it got even worse wtf is that draw command LMAO
-        just adding support for flipping the spritre made it SO much more ugly
-        
-        so.. there's also some kind of bug that causes some animations to just be skipped.
-        instead, they just skip to the ending frame.
-        the only real way around it is to have an animator object for each animation.
-        but that's so wasteful :<
-        for now though, the bandaid fixes in QuickDraw1P.cs work.*/
+        at least.. I hope so. As of writing this, I don't mess with like half the arguments.*/
         public void AnimateThis( Texture2D spriteSheet, int frames, int positionX, int positionY, SpriteBatch spriteBatch, GameTime gametime, List<Rectangle> spriteCutout, SpriteEffects effect)
         {
+            System.Console.WriteLine((float)gametime.ElapsedGameTime.TotalMilliseconds);
             if (whichFrame < frames-1)
             {
-                if (timer > 0.2)
+                if (timer > 35)
                 {
                     whichFrame++;
                     timer = 0;
