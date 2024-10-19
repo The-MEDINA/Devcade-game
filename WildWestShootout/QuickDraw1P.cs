@@ -39,16 +39,18 @@ namespace WildWestShootout
         int enemyFrames;
         int startTimer = 3000;
         int pauseTimer = 3000;
+        float speedBonus = 0;
         Random rnjesus = new Random();
         Animator playerAnimator = new Animator();
         Animator enemyAnimator = new Animator();
-        int[] enemyCountdown = new int[2];
+        float[] enemyCountdown = new float[2];
         int countdown;
         bool startDraw = false;
         int highscore = 0;
         bool playerLost = false;
         int[] speedBounds = {300, 3000};
         int roundCount = 1;
+        int enemySpeed;
         //starts the QuickDraw(1P) gamemode.
         public QuickDraw1P(SpriteBatch spriteBatch, SpriteFont font, ContentManager Content)
         {
@@ -75,7 +77,7 @@ namespace WildWestShootout
         cutouts for any sprites MUST be done here, else they don't animate properly.*/
         public void UpdateThis(GameTime _gameTime)
         {
-            EnemyLogic(_gameTime, rnjesus.Next(speedBounds[0],speedBounds[1]));
+            EnemyLogic(_gameTime);
             if (StartGame(_gameTime) == true)
             {
                 countdown -= _gameTime.ElapsedGameTime.Milliseconds;
@@ -170,24 +172,26 @@ namespace WildWestShootout
                 else if (quickDrawStep == 4)
                 {
                     playerAnimator.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots, 0);
-                    _spriteBatch.DrawString(_font, $"Nice draw! You win!", new Vector2(0, 232), Color.Black);
+                    _spriteBatch.DrawString(_font, $"Nice draw! You win!\nSpeed bonus: {speedBonus}", new Vector2(0, 232), Color.Black);
                 }
             }
         }
-        public void EnemyLogic(GameTime _gameTime,int enemySpeed)
+        public void EnemyLogic(GameTime _gameTime)
         {
-            if (startDraw == true)
+            System.Console.WriteLine($"Enemyspeed: {enemySpeed} div4: {enemySpeed/4} Speedbonus: {speedBonus} enemycountdown: {enemyCountdown[1]}");
+            if (startDraw == true && quickDrawStep != 4 && enemyStep != 7)
             {
-                enemyCountdown[1] -= (int)_gameTime.ElapsedGameTime.Milliseconds;
+                enemyCountdown[1] += (float)_gameTime.ElapsedGameTime.Milliseconds;
+                speedBonus += (float)_gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
-                enemyCountdown[1] = enemySpeed/4;
+                enemyCountdown[1] = 0;
             }
-            if (enemyCountdown[1] <= 0)
+            if (enemyCountdown[1] >= enemySpeed/4)
             {
                 enemyStep++;
-                enemyCountdown[1] = enemySpeed/4;
+                enemyCountdown[1] -= enemySpeed/4;
             }
             if (quickDrawStep == 4)
             {
@@ -197,6 +201,7 @@ namespace WildWestShootout
                 {
                     enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
                     soundEffects[0].CreateInstance().Play();
+                    speedBonus = enemySpeed-speedBonus;
                 }
                 unstickEnemy = true;
             }
@@ -264,6 +269,7 @@ namespace WildWestShootout
         }
         public void ResetGame()
         {
+            speedBonus = 0;
             highscore = 0;
             roundCount = 1;
             unstick = false;
@@ -276,10 +282,12 @@ namespace WildWestShootout
             countdown = rnjesus.Next(100,10001);
             startDraw = false;
             startTimer = 3000;
+            enemySpeed = rnjesus.Next(speedBounds[0],speedBounds[1]);
         }
         public void NextRound()
         {
-            highscore+= (1000+((roundCount-1)*10));
+            highscore+= (1000+(int)speedBonus);
+            speedBonus = 0;
             roundCount++;
             unstick = false;
             unstickEnemy = false;
@@ -295,6 +303,7 @@ namespace WildWestShootout
             {
                 speedBounds[1] = 300;
             } 
+            enemySpeed = rnjesus.Next(speedBounds[0],speedBounds[1]);
         }
     }
 }
