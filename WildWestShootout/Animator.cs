@@ -14,9 +14,9 @@ namespace DevcadeGame
         List<Rectangle> spriteSheetList = new();
         int whichFrame = 0;
         float timer = 0;
-        bool dontLoop = false;
         /*creates the rectangle that'll be used for the animations. Returns a list of rectangles that you'll need to save.
-        You can't just call this method in AnimateThis. I tried. :<*/
+        You can't just call this method in AnimateThis. I tried. :<
+        IT MUST BE CALLED ONLY ONCE, ELSE THINGS BREAK.*/
         public List<Rectangle> CreateCutout(int frames, int size)
         {
             whichFrame = 0;
