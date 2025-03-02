@@ -9,6 +9,9 @@ using DevcadeGame;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Microsoft.Xna.Framework.Audio;
+//Human reaction time is 250 milliseconds.
+//Minimum time ingame should be 300 milliseconds.
+//The plan is to divide this by 4, 
 namespace WildWestShootout
 {
 	public class QuickDraw1P:Game1
@@ -45,7 +48,7 @@ namespace WildWestShootout
         bool startDraw = false;
         int highscore = 0;
         bool playerLost = false;
-        int[] speedBounds = {750, 3000};
+        int[] speedBounds = {300, 3000};
         int roundCount = 1;
         int enemySpeed;
         //starts the QuickDraw(1P) gamemode.
@@ -170,13 +173,13 @@ namespace WildWestShootout
                 else if (quickDrawStep == 4)
                 {
                     playerAnimator.AnimateThis(P1ShootsRaw, 34, 32, 490, _spriteBatch, _gameTime, PlayerShoots, 0);
-                    _spriteBatch.DrawString(_font, $"Nice draw! You win!\nSpeed + Difficulty bonus: \n{speedBonus}", new Vector2(0, 232), Color.Black);
+                    _spriteBatch.DrawString(_font, $"Nice draw! You win!\nSpeed bonus: {speedBonus}", new Vector2(0, 232), Color.Black);
                 }
             }
         }
         public void EnemyLogic(GameTime _gameTime)
         {
-            System.Console.WriteLine($"lower: {speedBounds[0]} upper: {speedBounds[1]} speed: {enemySpeed}");
+            //System.Console.WriteLine($"Enemyspeed: {enemySpeed} div4: {enemySpeed/4} Speedbonus: {speedBonus} enemycountdown: {enemyCountdown[1]}");
             if (startDraw == true && quickDrawStep != 4 && enemyStep != 7)
             {
                 enemyCountdown[1] += (float)_gameTime.ElapsedGameTime.Milliseconds;
@@ -190,6 +193,11 @@ namespace WildWestShootout
                 {
                     enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
                     soundEffects[0].CreateInstance().Play();
+                    System.Console.WriteLine($"enemy speed: {enemySpeed} speedBonus: {speedBonus}");
+                    System.Console.WriteLine($"{enemySpeed-speedBonus}");
+                    System.Console.WriteLine($"{3000-(enemySpeed-speedBonus)}");
+                    System.Console.WriteLine($"{3000-(enemySpeed-speedBonus)/enemySpeed}");
+                    System.Console.WriteLine($"{(int)(3000-(enemySpeed-speedBonus)/enemySpeed)}");
                     speedBonus = (int)((3000-(enemySpeed-speedBonus))/Math.Sqrt(enemySpeed));
                 }
                 unstickEnemy = true;
@@ -203,7 +211,7 @@ namespace WildWestShootout
                     enemyStepToDraw = player1Stands;
                     enemyCutout = enemyAnimator.CreateCutout(enemyFrames,128);
                 }
-                else if (speedBonus >= enemySpeed/2)
+                else if (speedBonus >= enemySpeed/2) //HERE
                 {
                     if (enemyStep == 0)
                     {
@@ -283,7 +291,6 @@ namespace WildWestShootout
             countdown = rnjesus.Next(100,10001);
             startDraw = false;
             startTimer = 3000;
-            speedBounds[0] = 750;
             enemySpeed = rnjesus.Next(speedBounds[0],speedBounds[1]);
             speedBonus = enemySpeed;
             playerAnimator.Reset();
@@ -301,14 +308,10 @@ namespace WildWestShootout
             countdown = rnjesus.Next(100,10001);
             startDraw = false;
             startTimer = 3000;
-            speedBounds[1] = (int)(350+(3000/(Math.Sqrt(roundCount))));
-            if (speedBounds[0] > 350)
+            speedBounds[1] = (int)(300+(3000/(roundCount)));
+            if (speedBounds[1] < 300)
             {
-                speedBounds[0] -= 40;
-            }
-            if (speedBounds[1] < 350)
-            {
-                speedBounds[1] = 350;
+                speedBounds[1] = 300;
             }
             enemySpeed = rnjesus.Next(speedBounds[0],speedBounds[1]);
             speedBonus = enemySpeed;
